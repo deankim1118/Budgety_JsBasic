@@ -1,15 +1,15 @@
 // BUDGET CONTROLLER
-let budgetController = (function () {
+const budgetController = (function () {
   // Some code
 })();
 
 // UI CONTROLLER
-let UIController = (function () {
+const UIController = (function () {
   // Some code
 })();
 
 // GLOBAL CONTROLLER
-let controller = (function (butgetCtrl, UICtrl) {
+const controller = (function (butgetCtrl, UICtrl) {
   let ctrlAddItem = function () {
     // 1. Get the field input value
     // 2. Add the item to the butget controller
