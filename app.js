@@ -27,22 +27,32 @@ const UIController = (function () {
 
 // GLOBAL CONTROLLER
 const controller = (function (butgetCtrl, UICtrl) {
-  const DOM = UICtrl.getDOMstring();
+  const setupEventListeners = function () {
+    const DOM = UICtrl.getDOMstring();
+
+    document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+    document.addEventListener('keypress', function (event) {
+      if (event.keyCode === 13 || event.which === 13) {
+        ctrlAddItem();
+      }
+    });
+  };
 
   let ctrlAddItem = function () {
     // 1. Get the field input value
     let input = UICtrl.getInput();
-    console.log(input);
     // 2. Add the item to the butget controller
     // 3. Add the item to the UI
     // 4. Calculate the budget
     // 5. Display the budget on the UI
   };
 
-  document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
-  document.addEventListener('keypress', function (event) {
-    if (event.keyCode === 13 || event.which === 13) {
-      ctrlAddItem();
-    }
-  });
+  return {
+    init: function () {
+      console.log('init has started');
+      setupEventListeners();
+    },
+  };
 })(budgetController, UIController);
+
+controller.init();
