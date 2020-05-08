@@ -94,6 +94,7 @@ const UIController = (function () {
     incomeLabel: '.budget__income--value',
     expensesLabel: '.budget__expenses--value',
     percentageLabel: '.budget__expenses--percentage',
+    container: '.container',
   };
   // 1. Get the field input value
   return {
@@ -168,6 +169,9 @@ const controller = (function (butgetCtrl, UICtrl) {
         ctrlAddItem();
       }
     });
+    document
+      .querySelector(DOM.container)
+      .addEventListener('click', ctrlDeleteItem);
   };
 
   let updateBudget = function () {
@@ -194,6 +198,25 @@ const controller = (function (butgetCtrl, UICtrl) {
       UICtrl.clearFields();
       // 5. Calculate and Update Budget
       updateBudget();
+    }
+  };
+
+  let ctrlDeleteItem = function (event) {
+    let itemID, splitID, type, ID;
+
+    itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (itemID) {
+      // inc-1 or exp-1
+      splitID = itemID.split('-');
+      type = splitID[0];
+      ID = splitID[1];
+
+      // 1. delete the item from the data structure
+
+      // 2. Delete the item from the UI
+
+      // 3. Update and show the new budget
     }
   };
 
