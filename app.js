@@ -66,9 +66,7 @@ const UIController = (function () {
         value: document.querySelector(DOMstring.inputBtn).value,
       };
     },
-    getDOMstring: function () {
-      return DOMstring;
-    },
+
     addListItem: function (obj, type) {
       let html, newHtml, element;
 
@@ -81,7 +79,6 @@ const UIController = (function () {
         // Create HTML string with placeholder text(%%)
         html = `<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`;
       }
-
       // Replace the placeholder with some actual data
       newHtml = html.replace('%id%', obj.id);
       newHtml = newHtml.replace('%description%', obj.description);
@@ -90,6 +87,21 @@ const UIController = (function () {
       document
         .querySelector(element)
         .insertAdjacentHTML('beforebegin', newHtml);
+    },
+
+    clearFields: function () {
+      const inputFields = document.querySelectorAll(
+        `${DOMstring.inputDescription},${DOMstring.inputBtn}`
+      );
+
+      const fieldsArr = Array.prototype.slice.call(inputFields);
+      fieldsArr.forEach((element) => {
+        element.value = '';
+      });
+      fieldsArr[0].focus();
+    },
+    getDOMstring: function () {
+      return DOMstring;
     },
   };
 })();
@@ -116,8 +128,10 @@ const controller = (function (butgetCtrl, UICtrl) {
     newItem = butgetCtrl.addItem(input.type, input.description, input.value);
     // 3. Add the item to the UI
     UICtrl.addListItem(newItem, input.type);
-    // 4. Calculate the budget
-    // 5. Display the budget on the UI
+    // 4. Clear the input field
+    UICtrl.clearFields();
+    // 5. Calculate the budget
+    // 6. Display the budget on the UI
   };
 
   return {
