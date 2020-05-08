@@ -41,7 +41,9 @@ const budgetController = (function () {
       }
       // Push the newItem into the data structure
       data.allItem[type].push(newItem);
-      console.log(data.allItem);
+
+      // Return the new element
+      return newItem;
     },
   };
 })();
