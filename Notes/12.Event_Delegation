@@ -1,0 +1,27 @@
+# Event Bubble & Event Delegation
+
+## Section.log
+
+- Event Bubble
+- Event Delegation
+
+##Tips
+
+1. Event Bubble
+
+   - Event bubble means when an event is triggered on Some DOM element, then the exact same event is also triggered on all of the parent element.
+
+2. Event Delegation
+
+   - Attach an event handler to a parent element and wait for the event to bubble up.
+
+3. Use cases for event delegation
+
+   - When we have an element with lots of child elements that we're interested in.
+   - When we want event handler attached to an element that is not yet in the DOM when our page is loaded.
+
+## Example
+
+<pre><code>
+
+</code></pre>
