@@ -45,6 +45,9 @@ const budgetController = (function () {
       // Return the new element
       return newItem;
     },
+    testing: function () {
+      return data;
+    },
   };
 })();
 
@@ -63,7 +66,7 @@ const UIController = (function () {
       return {
         type: document.querySelector(DOMstring.inputType).value,
         description: document.querySelector(DOMstring.inputDescription).value,
-        value: document.querySelector(DOMstring.inputBtn).value,
+        value: parseFloat(document.querySelector(DOMstring.inputBtn).value),
       };
     },
 
@@ -119,19 +122,28 @@ const controller = (function (butgetCtrl, UICtrl) {
     });
   };
 
+  let updateBudget = function () {
+    // 1. Calculate the budget
+    // 2. Return the budget
+    // 3. Display the budget on the UI
+  };
+
   let ctrlAddItem = function () {
     let input, newItem;
 
     // 1. Get the field input value
     input = UICtrl.getInput();
-    // 2. Add the item to the butget controller
-    newItem = butgetCtrl.addItem(input.type, input.description, input.value);
-    // 3. Add the item to the UI
-    UICtrl.addListItem(newItem, input.type);
-    // 4. Clear the input field
-    UICtrl.clearFields();
-    // 5. Calculate the budget
-    // 6. Display the budget on the UI
+
+    if (input.description !== '' && !isNaN(input.value) && input.value > 0) {
+      // 2. Add the item to the butget controller
+      newItem = butgetCtrl.addItem(input.type, input.description, input.value);
+      // 3. Add the item to the UI
+      UICtrl.addListItem(newItem, input.type);
+      // 4. Clear the input field
+      UICtrl.clearFields();
+      // 5. Calculate and Update Budget
+      updateBudget();
+    }
   };
 
   return {
