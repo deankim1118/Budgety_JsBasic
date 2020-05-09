@@ -76,6 +76,18 @@ const budgetController = (function () {
         percentage: data.percentage,
       };
     },
+    deleteItem: function (type, id) {
+      // let newDeletedItem = data.allItem[type].filter(
+      //   (element) => element.id !== id
+      // );
+      // data.allItem[type] = newDeletedItem;
+      const ids = data.allItem[type].map((element) => element.id);
+      const index = ids.indexOf(id);
+
+      if (index !== -1) {
+        data.allItem[type].splice(index, 1);
+      }
+    },
     testing: function () {
       return data;
     },
@@ -112,7 +124,7 @@ const UIController = (function () {
       if (type === 'inc') {
         element = DOMstring.incomeContainer;
         // Create HTML string with placeholder text(%%)
-        html = `<div class="item clearfix" id="inc-$%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`;
+        html = `<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`;
       } else if (type === 'exp') {
         element = DOMstring.expensesContainer;
         // Create HTML string with placeholder text(%%)
@@ -210,10 +222,10 @@ const controller = (function (butgetCtrl, UICtrl) {
       // inc-1 or exp-1
       splitID = itemID.split('-');
       type = splitID[0];
-      ID = splitID[1];
+      ID = parseInt(splitID[1]);
 
       // 1. delete the item from the data structure
-
+      butgetCtrl.deleteItem(type, ID);
       // 2. Delete the item from the UI
 
       // 3. Update and show the new budget
