@@ -118,7 +118,8 @@ const UIController = (function () {
   const DOMstring = {
     inputType: '.add__type',
     inputDescription: '.add__description',
-    inputBtn: '.add__value',
+    inputValue: '.add__value',
+    inputBtn: '.add__btn',
     incomeContainer: '.income__list',
     expensesContainer: '.expenses__list',
     budgetLabel: '.budget__value',
@@ -143,13 +144,19 @@ const UIController = (function () {
     return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
   };
 
+  const nodeListForEach = function (list, callback) {
+    for (i = 0; i < list.length; i++) {
+      callback(list[i], i);
+    }
+  };
+
   return {
     // 1. Get the field input value
     getInput: function () {
       return {
         type: document.querySelector(DOMstring.inputType).value,
         description: document.querySelector(DOMstring.inputDescription).value,
-        value: parseFloat(document.querySelector(DOMstring.inputBtn).value),
+        value: parseFloat(document.querySelector(DOMstring.inputValue).value),
       };
     },
 
@@ -175,7 +182,7 @@ const UIController = (function () {
 
     clearFields: function () {
       const inputFields = document.querySelectorAll(
-        `${DOMstring.inputDescription},${DOMstring.inputBtn}`
+        `${DOMstring.inputDescription},${DOMstring.inputValue}`
       );
 
       const fieldsArr = Array.prototype.slice.call(inputFields);
@@ -198,12 +205,6 @@ const UIController = (function () {
     },
     displayPercentages: function (percentages) {
       const field = document.querySelectorAll(DOMstring.expensesPercLabel);
-
-      const nodeListForEach = function (list, callback) {
-        for (i = 0; i < list.length; i++) {
-          callback(list[i], i);
-        }
-      };
 
       nodeListForEach(field, function (element, index) {
         if (percentages[index] > 0) {
@@ -246,6 +247,17 @@ const UIController = (function () {
       let year = now.getFullYear();
       document.querySelector(DOMstring.dateLabel).textContent = months[month] + ' ' + year;
     },
+    changedType: function () {
+      const fields = document.querySelectorAll(
+        `${DOMstring.inputType}, ${DOMstring.inputDescription}, ${DOMstring.inputValue}`
+      );
+
+      Array.prototype.forEach.call(fields, (element) => {
+        element.classList.toggle('red-focus');
+      });
+
+      document.querySelector(DOMstring.inputBtn).classList.toggle('red');
+    },
     getDOMstring: function () {
       return DOMstring;
     },
@@ -258,12 +270,16 @@ const controller = (function (budgetCtrl, UICtrl) {
     const DOM = UICtrl.getDOMstring();
 
     document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+
     document.addEventListener('keypress', function (event) {
       if (event.keyCode === 13 || event.which === 13) {
         ctrlAddItem();
       }
     });
+
     document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+    document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
   };
 
   const updateBudget = function () {
