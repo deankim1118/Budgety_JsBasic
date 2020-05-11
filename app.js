@@ -23,14 +23,6 @@
 // 5. Display the item
 // 자료 구조 잘 만들고 지우던지 저장하던지 제자리에만 잘 가져다 놓으면 된다!!! 제일 중요!! 내 생각엔~~
 
-if (loadedInc !== null) {
-  let parsedInc = JSON.parse(loadedInc);
-  parsedInc.forEach((obj) => {
-    budgetCtrl.addItem('inc', obj.des, obj.value);
-    UIctrl.displayItem('inc', obj);
-  });
-}
-
 let data = {
   allItem: {
     inc: [],
